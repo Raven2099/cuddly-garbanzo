@@ -1,0 +1,39 @@
+.inputbox{
+    font-weight: 700;
+    cursor: text;
+    color: #e1940e;
+    width: 100%;
+    height: 30px;
+    border-width: 1px;
+    border-color: #421497;
+    border-top: transparent;
+    border-left: transparent;
+    border-right: transparent;
+}
+
+.datebox{
+    background: transparent;
+    border-color: #4214974;
+    width : 100%;
+    height: 20px;
+    cursor: pointer;
+    border-width: 1px;
+    border-color: #421497;
+    border-top: transparent;
+    border-left: transparent;
+    border-right: transparent;
+}
+
+.textar{
+    width: 100%;
+    border-color: #421497;
+    height: 50px
+
+}
+
+.form{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
