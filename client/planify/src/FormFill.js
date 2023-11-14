@@ -1,19 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import styles from './styles/InputBox.module.css';
 import axios from 'axios';
-
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default function FormFill() {
 
-  //add to db
+
+
+  
   const [itemText, setItemText] = useState('')
   const [listItems, setListItems] = useState([]);
+  const [date, setDate] = useState(null);
+  const [priority, setPriority] = useState(null); 
+  const [completed, setCompleted] = useState(false);
+
+
+
+
+  //add to db
+  
+  
   const addItem = async (e) => {
     e.preventDefault();
     try{
-      const res = await axios.post('http://localhost:5500/api/item', {item: itemText})
+      const res = await axios.post('http://localhost:5500/api/item', {item: itemText, priority: priority, completed: completed, date: date});
       setListItems(prev =>[...prev, res.data]);
       setItemText('');
+      setPriority(null);
+      setDate(null);
+      setCompleted(false);
+      
     }catch(err){
       console.log(err); 
     }
@@ -47,19 +64,99 @@ export default function FormFill() {
     }
   }
 
+
+//TASK ADD FORM HERE
+
   return (
     <div>
-      <form className="form" onSubmit={e => addItem(e)}>
-      <input type="text" placeholder='Add Todo Item'
-      style={{ textAlign: 'left', marginRight: '500px' }} 
-      className={styles.inputbox}
-      onChange={e => {setItemText(e.target.value)} } value={itemText} />
+      
+      <form className={styles.form} onSubmit={e => addItem(e)}>
+      <h1>Add A Task</h1>
+{/* ADD A TASK NAME */}
+
+        <input type="text" placeholder='Add Todo Item'
+        style={{ textAlign: 'left', marginRight: '500px' }} 
+        className={styles.inputbox}
+        onChange={e => {setItemText(e.target.value)} } value={itemText} required />
+        
+{/* ADD DATE LATER */}
+<br>
+</br>
+<br/>
+        <input type='date' required
+        onChange={e => {setDate(e.target.value)} } value={date}
+        className={styles.datebox}
+        ></input>
+
+{/* ADD PRIOIRTY */}
+<br />
+<br />
+<p> Select Task Priority</p>
+<div className={styles.radio_input}>
+  
+<input
+    type="radio"
+    id="lowpr"
+    name="priority"
+    value="low"
+    required
+    checked={priority === 'low'}
+    onChange={() => setPriority('low')}
+  />
+  <label htmlFor="lowpr">Low
+    <span>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g><g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g><g id="SVGRepo_iconCarrier"> <g id="Interface / Check"> <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#199f6b" d="M6 12L10.2426 16.2426L18.727 7.75732" id="Vector"></path> </g> </g></svg>
+    </span>
+  </label>
 
 
-      <button type='submit' style={{backgroundColor: '#ffba42'}}>Save</button>
+  <input
+    type="radio"
+    id="mediumpr"
+    name="priority"
+    value="mediumpr"
+    checked={priority === 'mediumpr'}
+    onChange={() => setPriority('mediumpr')}
+  />
+  <label htmlFor="mediumpr">Medium
+    <span>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g><g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g><g id="SVGRepo_iconCarrier"> <g id="Interface / Check"> <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#1a89c1" d="M6 12L10.2426 16.2426L18.727 7.75732" id="Vector"></path> </g> </g></svg>
+    </span>
+  </label>
+
+  <input
+    type="radio"
+    id="highpr"
+    name="priority"
+    value="high"
+    checked={priority === 'high'}
+    onChange={() => setPriority('high')}
+  />
+  <label htmlFor="highpr">High
+    <span>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><g stroke-width="0" id="SVGRepo_bgCarrier"></g><g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g><g id="SVGRepo_iconCarrier"> <g id="Interface / Check"> <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#a81f1f" d="M6 12L10.2426 16.2426L18.727 7.75732" id="Vector"></path> </g> </g></svg>
+    </span>
+  </label>
+</div>
+
+
+{/* ADD CATEGORY */}
+
+
+
+{/* DESCRIPTION */}
+<br/>
+<br/>
+<div>
+<textarea draggable='false' placeholder='Add A Note...' className={styles.textarea}></textarea>
+</div>
+{/* Submit */}
+<br/>
+<br />
+      <button type='submit' className={styles.save_button}>Save</button>
       </form>
-      <div className='todo-listItems'>
-      {
+
+       {
           listItems.map(item => (
           <div className="todo-item">
             {
@@ -72,8 +169,8 @@ export default function FormFill() {
             }
           </div>
           ))
-        }
-        
+      } 
+      <div className='todo-listItems'>
 
       </div>
     </div>
