@@ -2,7 +2,10 @@ POST http://localhost:5500/api/item
 Content-Type: application/json
 
 {
-"item": "New"
+"item": "Task 3",
+"date": "2023-11-09",
+"completed": "false",
+ "priority" : "low"
 }
 
 ###
@@ -13,14 +16,14 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:5500/api/item/654aefad5fb91fae8c55f192
+PUT http://localhost:5500/api/item/654c69390f758457059ec17a
 Content-Type: application/json
 
 {
-"item": "This is the second todo item updated!!"
+"item": "Updates this!!"
 }
 
 
 ###
-DELETE http://localhost:5500/api/item/654af0bec3651052f087d1a3 
+DELETE http://localhost:5500/api/item/654c69390f758457059ec17a
 Content-Type: application/json

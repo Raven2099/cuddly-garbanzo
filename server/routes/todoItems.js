@@ -7,7 +7,10 @@ const todoItemsModel = require('../models/todoItems');
 router.post('/api/item', async (req, res)=>{
   try{
     const newItem = new todoItemsModel({
-      item: req.body.item
+      item: req.body.item,
+      date: req.body.date, 
+      completed: req.body.completed,
+      priority: req.body.priority || 'medium'
     })
     //save this item in database
     const saveItem = await newItem.save()
